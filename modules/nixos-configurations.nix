@@ -18,8 +18,9 @@ in
   flake.nixosConfigurations.default = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
+      config.flake.nixosModules.zsh
       (
-        { pkgs, ... }:
+        { ... }:
         {
           system.stateVersion = "25.05";
           networking.hostName = "nixos";
@@ -27,9 +28,6 @@ in
             enable = true;
             settings.PasswordAuthentication = false;
           };
-          programs.zsh.enable = true;
-          users.defaultUserShell = pkgs.zsh;
-          environment.systemPackages = [ pkgs.zsh ];
           users.users = mapAttr mkSuperUser superUsers;
         }
       )
