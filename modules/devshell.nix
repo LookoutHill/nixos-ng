@@ -13,7 +13,7 @@
         src = self;
         config = {
           pre-commit.commands.treefmt = {
-            run = "${lib.getExe config.treefmt.build.wrapper} {staged_files}";
+            run = "treefmt --fail-on-change --no-cache {staged_files}";
           };
         };
       };
@@ -22,6 +22,7 @@
       checks.lefthook-check = lefthook-check;
       devShells.default = pkgs.mkShell {
         inherit (lefthook-check) shellHook;
+        packages = [ config.treefmt.build.wrapper ];
       };
     };
 }

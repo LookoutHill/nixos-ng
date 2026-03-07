@@ -18,23 +18,21 @@ in
   flake.nixosConfigurations.default = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
-      ({ pkgs, ... }: {
-        system.stateVersion = "25.05";
-        networking.hostName = "nixos";
-        services.openssh = {
-          enable = true;
-          settings.PasswordAuthentication = false;
-        };
-        #boot.loader.grub.devices = [ "/dev/sda" ];
-        #fileSystems."/" = {
-        #  device = "/dev/sda1";
-        #  fsType = "ext4";
-        #};
-        programs.zsh.enable = true;
-        users.defaultUserShell = pkgs.zsh;
-        environment.systemPackages = [ pkgs.zsh ];
-        users.users = mapAttr mkSuperUser superUsers;
-      })
+      (
+        { pkgs, ... }:
+        {
+          system.stateVersion = "25.05";
+          networking.hostName = "nixos";
+          services.openssh = {
+            enable = true;
+            settings.PasswordAuthentication = false;
+          };
+          programs.zsh.enable = true;
+          users.defaultUserShell = pkgs.zsh;
+          environment.systemPackages = [ pkgs.zsh ];
+          users.users = mapAttr mkSuperUser superUsers;
+        }
+      )
     ];
   };
 }
