@@ -23,6 +23,11 @@
       devShells.default = pkgs.mkShell {
         inherit (lefthook-check) shellHook;
         packages = [ config.treefmt.build.wrapper ];
+        LEFTHOOK_BIN = toString (
+          pkgs.writeShellScript "lefthook-dumb-term" ''
+            exec env TERM=dumb ${lib.getExe pkgs.lefthook} "$@"
+          ''
+        );
       };
     };
 }
