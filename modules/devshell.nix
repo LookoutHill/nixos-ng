@@ -1,13 +1,7 @@
 { self, inputs, ... }:
 {
   perSystem =
-    {
-      config,
-      system,
-      pkgs,
-      lib,
-      ...
-    }:
+    { config, system, pkgs, lib, ... }:
     let
       lefthook-check = inputs.lefthook-nix.lib.${system}.run {
         src = self;
@@ -17,8 +11,7 @@
           };
         };
       };
-    in
-    {
+    in {
       checks.lefthook-check = lefthook-check;
       devShells.default = pkgs.mkShell {
         inherit (lefthook-check) shellHook;

@@ -3,14 +3,13 @@
   flake.nixosModules.zsh =
     { pkgs, ... }:
     {
-
       users.defaultUserShell = pkgs.zsh;
 
       environment.systemPackages = with pkgs; [
+        zsh
         atuin # ^R
         eza # ls
         git
-        zsh
       ];
 
       programs.zsh = {
@@ -121,6 +120,5 @@
           eval "$(atuin init zsh --disable-up-arrow)"
         '';
       };
-
     };
 }
